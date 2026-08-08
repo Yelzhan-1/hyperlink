@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>HYPERLINK — AI-to-AI communication</title>
+<meta name="description" content="Two AI agents that speak natural language to people and a strict machine protocol to each other. Watch the handover happen frame by frame." />
+<meta name="theme-color" content="#05070d" />
+<meta name="color-scheme" content="dark" />
+<meta name="robots" content="noindex, nofollow" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="HYPERLINK — AI-to-AI communication" />
+<meta property="og:site_name" content="HYPERLINK" />
+<meta property="og:description" content="Two AI agents that speak natural language to people and a strict machine protocol to each other." />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="HYPERLINK — AI-to-AI communication" />
+<meta name="twitter:description" content="Two AI agents that speak natural language to people and a strict machine protocol to each other." />
+<link rel="stylesheet" href="/styles.css" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%2305070d'/><circle cx='7' cy='16' r='3' fill='%2322d3ee'/><circle cx='25' cy='16' r='3' fill='%23a78bfa'/><path d='M10 16h12' stroke='%23e879f9' stroke-width='1.5'/></svg>" />
+</head>
+<body>
+
+<!-- ── MASTHEAD ──────────────────────────────────────────────────────────── -->
+<header class="masthead">
+  <div class="brand">
+    <span class="brand-glyph" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="brand-name">HYPERLINK</span>
+    <span class="brand-sub">AI-to-AI communication</span>
+  </div>
+
+  <div class="masthead-controls">
+    <button type="button" class="ctl" id="sound-toggle" aria-pressed="false">
+      <span class="ctl-dot" aria-hidden="true"></span><span>Sound off</span>
+    </button>
+    <button type="button" class="ctl" id="reset-link">
+      <span class="ctl-dot" aria-hidden="true"></span><span>Reset link</span>
+    </button>
+  </div>
+</header>
+
+<!-- ── SYSTEM STATUS ─────────────────────────────────────────────────────── -->
+<section class="sysbar" aria-label="System status">
+  <dl>
+    <div class="sys" id="sys-network"><dt>Network</dt><dd><i aria-hidden="true"></i><span>—</span></dd></div>
+    <div class="sys" id="sys-socket"><dt>WebSocket</dt><dd><i aria-hidden="true"></i><span>—</span></dd></div>
+    <div class="sys" id="sys-agent-a"><dt>Agent A</dt><dd><i aria-hidden="true"></i><span>—</span></dd></div>
+    <div class="sys" id="sys-agent-b"><dt>Agent B</dt><dd><i aria-hidden="true"></i><span>—</span></dd></div>
+    <div class="sys" id="sys-ai"><dt>AI backend</dt><dd><i aria-hidden="true"></i><span>—</span></dd></div>
+    <div class="sys" id="sys-protocol"><dt>Protocol</dt><dd><i aria-hidden="true"></i><span>HL/0.1</span></dd></div>
+    <div class="sys" id="sys-sound"><dt>Sound</dt><dd><i aria-hidden="true"></i><span>Off</span></dd></div>
+  </dl>
+</section>
+
+<!-- ── DECK ──────────────────────────────────────────────────────────────── -->
+<main class="deck">
+
+  <!-- AGENT A ────────────────────────────────── -->
+  <section class="agent" id="agent-A" data-agent="A" aria-labelledby="agent-A-name">
+    <header class="agent-head">
+      <span class="agent-mark" aria-hidden="true"><b></b></span>
+      <div class="agent-id">
+        <h2 id="agent-A-name">Agent A</h2>
+        <p class="agent-role">Speaks to humans</p>
+      </div>
+      <span class="agent-net" data-status>Offline</span>
+    </header>
+
+    <div class="agent-state">
+      <span class="agent-state-label">State</span>
+      <output class="agent-state-value" data-state aria-live="polite">Standby</output>
+      <span class="agent-activity" data-activity aria-hidden="true"></span>
+    </div>
+
+    <div class="agent-stream">
+      <h3 class="rail-title">Protocol stream</h3>
+      <div class="stream" data-packets aria-label="Agent A protocol stream"></div>
+    </div>
+
+    <p class="agent-seal" data-locked hidden>
+      <span aria-hidden="true"></span>
+      No human channel — reachable only by validated frame.
+    </p>
+    <div data-messages hidden></div>
+  </section>
+
+  <!-- SIGNAL ─────────────────────────────────── -->
+  <section class="signal" aria-labelledby="signal-title">
+    <header class="signal-head">
+      <h2 id="signal-title">Hyperlink signal</h2>
+      <span class="signal-state" id="link-label">Idle</span>
+    </header>
+
+    <div class="signal-stage">
+      <canvas id="signal-canvas" aria-hidden="true"></canvas>
+      <p class="signal-hint" id="signal-hint">No transmission yet</p>
+    </div>
+
+    <div class="timeline-wrap">
+      <h3 class="rail-title">Communication timeline</h3>
+      <ol class="timeline" id="timeline" aria-label="Communication sequence"></ol>
+    </div>
+
+    <dl class="counters">
+      <div><dt>Frames</dt><dd id="stat-frames">0</dd></div>
+      <div><dt>Bytes</dt><dd id="stat-bytes">0</dd></div>
+      <div><dt>Refused</dt><dd id="stat-rejects">0</dd></div>
+    </dl>
+  </section>
+
+  <!-- AGENT B ────────────────────────────────── -->
+  <section class="agent" id="agent-B" data-agent="B" aria-labelledby="agent-B-name">
+    <header class="agent-head">
+      <span class="agent-mark" aria-hidden="true"><b></b></span>
+      <div class="agent-id">
+        <h2 id="agent-B-name">Agent B</h2>
+        <p class="agent-role">Speaks only protocol</p>
+      </div>
+      <span class="agent-net" data-status>Offline</span>
+    </header>
+
+    <div class="agent-state">
+      <span class="agent-state-label">State</span>
+      <output class="agent-state-value" data-state aria-live="polite">Standby</output>
+      <span class="agent-activity" data-activity aria-hidden="true"></span>
+    </div>
+
+    <div class="agent-stream">
+      <h3 class="rail-title">Protocol stream</h3>
+      <div class="stream" data-packets aria-label="Agent B protocol stream"></div>
+    </div>
+
+    <p class="agent-seal" data-locked hidden>
+      <span aria-hidden="true"></span>
+      No human channel — reachable only by validated frame.
+    </p>
+    <div data-messages hidden></div>
+  </section>
+</main>
+
+<!-- ── HUMAN BAND ────────────────────────────────────────────────────────── -->
+<section class="human" aria-labelledby="composer-label">
+  <div class="transcript" id="transcript" aria-live="polite" aria-label="Conversation">
+    <p class="transcript-idle">
+      Ask for something a second machine would have to answer — a table, a meeting slot,
+      the weather. Your agent will translate it and stop speaking English at the border.
+    </p>
+  </div>
+
+  <form class="composer" id="composer" autocomplete="off">
+    <label class="composer-label" for="human-input" id="composer-label">Speak to Agent —</label>
+    <div class="composer-row">
+      <input id="human-input" name="human" type="text" spellcheck="false"
+             placeholder="Can you find a meeting time tomorrow after 6 PM?" />
+      <button type="submit" class="send" id="send">Transmit</button>
+    </div>
+    <div class="examples" id="scenarios" role="group" aria-label="Example requests"></div>
+  </form>
+
+  <details class="console">
+    <summary>Protocol console</summary>
+    <div class="console-body">
+      <label class="composer-label" for="frame-input">Inject a raw frame</label>
+      <div class="composer-row">
+        <input id="frame-input" name="frame" type="text" spellcheck="false"
+               placeholder="HL/0.1|TASK|WEATHER|CITY=ALMATY|DATE=TODAY|ID=900" />
+        <button type="button" id="inject">Inject</button>
+      </div>
+      <p class="console-hint">
+        Put a sentence in a parameter — <code>CITY="Какая погода сегодня?"</code> —
+        and the encoder refuses it. The frame counter will not move.
+      </p>
+    </div>
+  </details>
+</section>
+
+<!-- ── PROTOCOL INSPECTOR ────────────────────────────────────────────────── -->
+<aside class="inspector" id="inspector" role="dialog" aria-modal="false"
+       aria-labelledby="inspector-title" hidden>
+  <header class="inspector-head">
+    <h2 id="inspector-title">Transmission</h2>
+    <button type="button" class="inspector-close" id="inspector-close" aria-label="Close inspector">
+      <span aria-hidden="true">✕</span>
+    </button>
+  </header>
+  <div class="inspector-body" id="inspector-body"></div>
+</aside>
+
+<div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+
+<script type="module" src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "name": "hyperlink",
+  "version": "0.1.0",
+  "private": true,
+  "description": "HYPERLINK — AI-to-AI communication platform. Agents speak natural language to humans and a strict machine-native protocol to each other.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/server/index.js",
+    "dev": "node --watch src/server/index.js",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.5",
+    "@types/ws": "^8.5.12",
+    "typescript": "^5.6.3"
+  }
+}
